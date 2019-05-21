@@ -1,0 +1,84 @@
+* MIX
+It is both binary and decimal.
+** Words
+   Basic unit, byte. An unspecified amount of information. Capable of holding at least 64, at most 100, distinct values.
+   A computer word consists of five bytes and a sign(+ or -).
+** Registers
+   |-----------------+--------------+-----------------+------------------------------------------------------------------|
+   | Register Symbol | Meanning     | Contents        | Usage                                                            |
+   | A               | Accumulator  | 5 bytes, 1 sign | arithmetic and operating data                                    |
+   | X               | Extension    | 5 bytes, 1 sign | extension on the "right hand side", or right shifted value       |
+   | I               | Index        | 2 bytes, 1 sign | counting, referencing variable memory addresses                  |
+   | J               | Jump address | 2 bytes, +      | hold address of the instruction following the most recent "jump" |
+   |-----------------+--------------+-----------------+------------------------------------------------------------------|
+   Usually use 'r' prefixed to the name. E.g. 'rA'.
+
+   Besides, MIX contains
+   - an /overflow toggle/ (single bit, "on" or "off")
+   - a /comparison indicator/ (LESS, EQUAL, GREATER)
+   - /memory/ (4000 words of storage, each word with 5 bytes and a sign)
+   - /input-output devices/
+   
+** Partial Fields of Words
+   The 5 bytes and 1 sign are numbered as follows:
+
+   |-----+------+------+------+------+------|
+   |   0 |    1 |    2 |    3 |    4 |    5 |
+   | +/- | Byte | Byte | Byte | Byte | Byte |
+   |-----+------+------+------+------+------|
+   
+   Most of the instructions allow a programmer to use only part of a word. Thus, there exists a nonstandard
+   "field specification". The allowable fields are those that are adjacent in a word, and represented by (L:R).
+   It is represented inside the machine by the single number 8L+R.
+   
+** Insturction Format
+   |-----+---+---+---------------------+--------------+----------------|
+   |   0 | 1 | 2 | 3                   | 4            | 5              |
+   | +/- | A | A | I                   | F            | C              |
+   |     |   |   | index specification | modification | operation code |
+   |-----+---+---+---------------------+--------------+----------------|
+   
+   The +/-AA is the address.
+
+** Notation
+** Operators Categorized
+|-------------------+---------+-------------+------|
+| Operator Category | Command | Description | E.g. |
+|-------------------+---------+-------------+------|
+| Loading           |         |             |      |
+|                   |         |             |      |
+|-------------------+---------+-------------+------|
+| Storing           |         |             |      |
+|                   |         |             |      |
+|-------------------+---------+-------------+------|
+| Arithmetic        |         |             |      |
+|                   |         |             |      |
+|-------------------+---------+-------------+------|
+| Address Transfer  |         |             |      |
+|                   |         |             |      |
+|-------------------+---------+-------------+------|
+| Comparison        |         |             |      |
+|                   |         |             |      |
+|-------------------+---------+-------------+------|
+| Jump              |         |             |      |
+|                   |         |             |      |
+|-------------------+---------+-------------+------|
+| Miscellaneous     |         |             |      |
+|                   |         |             |      |
+|-------------------+---------+-------------+------|
+| Input/Output      |         |             |      |
+|                   |         |             |      |
+|-------------------+---------+-------------+------|
+| Conversion        |         |             |      |
+|                   |         |             |      |
+|-------------------+---------+-------------+------|
+
+$$
+E = cm^2
+$$
+
+
+#+begin_src mix
+STA 2000
+LDA 2000(5:5)
+#+end_src
